@@ -22,6 +22,10 @@
 
 ---
 
+## WRRC
+
+<img src="WRRC2.png">
+
 Name of feature: Adding weather API to our app - Lab 7
 
 Estimate of time needed to complete: 3 hours
