@@ -4,7 +4,7 @@
 
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
+require('dotenv').config(); // configure dotenv to work for this app 
 const weatherData = require('./data/weather.json'); // dummy data 
 
 // create instance of Express server to run 
@@ -45,34 +45,25 @@ app.get('/weather', (request, response, next) => {
 });
 
 class Forecast {
-  constructor(citySelected) {
+  constructor(searchQuery) {
     // find method to find type of list we want to return 
-    let { data } = weatherData.find(city => city.city_name.toLowerCase() === citySelected.toLowerCase());
-    this.data = data;
+    let { data } = weatherData.find(city => city.city_name.toLowerCase() === searchQuery.toLowerCase());
+    this.weather = data;
   }
 
   getForecast() {
-    return this.data.map(day => ({
+    return this.weather.map(day => ({
       date: day.datetime,
       description: day.weather.description
     }));
   }
 }
 
-// app.get('/fakeError', (request, response, next) => {
-//   try {
-//     const listThatDoesntExists = require('./listThatDoesntExists.js');
-//     response.send(listThatDoesntExists);
-//   } catch(error) {
-//     next(error.message);
-//   }
-// });
-
 // error handling middleware MUST be the last app.use() defined in the server file
 // params have to be in order 
 app.use((error, request, response, next) => {
-  console.log(error);
-  response.status(500).send(error);
+  console.error(error);
+  response.status(500).send(error.message);
 });
 
 
@@ -83,3 +74,29 @@ app.listen(PORT, () => console.log(`listening on PORT ${PORT}`));
 
 
 
+// app.get('/endpoint', async (request, response) => {
+//   try {
+//     const url = ''
+//     const responseData = await axios.get(url);
+//     console.log(response.data);
+// Create a class for your data into objects 
+//     const array = responseData.data.results.map(photo => new Photo(photo));
+//     response.statue(200).send(array);
+//   } catch(error){
+//    console.error(error);
+//    same as console.log, but build into JS
+//    next(error);
+//   }
+// })
+
+// Class Photo {
+//   constructor(photo){
+//     this.img_url = photo.urls.regular;
+//     this.photographer = photo.user.name;
+//   }
+// }
+
+// next middleware - tells Express how to handle middleware
+// app.use((error, request, response, next) => {
+//   response.status(500).send(error.message);
+// });
