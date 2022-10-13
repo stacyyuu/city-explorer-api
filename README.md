@@ -26,6 +26,8 @@
 
 <img src="WRRC2.png">
 
+---
+
 Name of feature: Adding weather API to our app - Lab 7
 
 Estimate of time needed to complete: 3 hours
@@ -35,3 +37,13 @@ Start time: 4pm
 Finish time: 6pm..
 
 Actual time needed to complete: 3hrs+
+
+---
+
+Name of feature: Adding weather and movies API to our app - Lab 8
+
+Estimate of time needed to complete: 2 hours
+
+1st attemp time: 7:30pm - 9:15pm
+
+Actual time needed to complete: Still working on it!
