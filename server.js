@@ -1,7 +1,6 @@
 'use strict';
 
 // requires are similar to imports, importing express, cors, dotenv
-
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config(); // configure dotenv to work for this app 
@@ -24,29 +23,6 @@ app.get('/', (request, response) => {
   response.send('testing... testing');
 });
 
-// define endpoint that gets weather data and returns it to React
-// app.get('/weather', (request, response, next) => {
-//   try {
-//     // grab searchQuery from req object
-//     // notice that query param is named 'type'
-//     // 'type' is name of query param we must send along with Axios from React in order to ask for data from our server 
-//     // const lat = req.query.lat;
-//     // const lon = req.query.lon;
-//     // const cityName = req.query.cityName;
-//     // alternatively, destructuring
-
-//     const { lat, lon, searchQuery } = request.query;
-//     const forecast = new Forecast(searchQuery);
-//     const forecastArray = forecast.getForecast();
-
-//     response.status(200).send(forecastArray); // send full array back to client who requested data from 'weather' endpoint 
-//   } catch (error) {
-//     // next can be used to pass an error to Express for the error middleware to handle
-//     next(error.message);
-//   }
-// });
-
-
 app.get('/weather', async (request, response, next) => {
   try {
     // baseURL, endpoint, query, queryParameters
@@ -61,7 +37,6 @@ app.get('/weather', async (request, response, next) => {
   }
 });
 
-
 class Forecast {
   constructor(weather) {
     this.date = weather.datetime,
@@ -69,13 +44,25 @@ class Forecast {
   }
 }
 
-//   getForecast() {
-//     return this.weather.map(day => ({
-//       date: day.datetime,
-//       description: day.weather.description
-//     }));
-//   }
-// }
+app.get('/movies', async (request, response, next) => {
+  try {
+    // baseURL, endpoint, query, queryParameters
+    const url = `https://api.themoviedb.org/3/search/keyword?api_key${process.env.MOVIE_API_KEY}&query${request.query.location}`;
+    const movieResponse = await axios.get(url);
+    console.log(movieResponse.data);
+    const movieArray = movieResponse.data.results.map(title => new Movie(title));
+    response.status(200).send(movieArray);
+  } catch(error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+class Movie {
+  constructor(title) {
+    this.name = title.results.name;
+  }
+}
 
 // error handling middleware MUST be the last app.use() defined in the server file
 // params have to be in order 
