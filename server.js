@@ -47,7 +47,7 @@ class Forecast {
 app.get('/movies', async (request, response, next) => {
   try {
     // baseURL, endpoint, query, queryParameters
-    const url = `https://api.themoviedb.org/3/search/keyword?api_key${process.env.MOVIE_API_KEY}&query${request.query.location}`;
+    const url = `https://api.themoviedb.org/3/search/keyword?api_key${process.env.MOVIE_API_KEY}&query${request.query.searchQuery}`;
     const movieResponse = await axios.get(url);
     console.log(movieResponse.data);
     const movieArray = movieResponse.data.results.map(title => new Movie(title));
