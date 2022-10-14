@@ -26,7 +26,7 @@ app.get('/', (request, response) => {
 app.get('/weather', async (request, response, next) => {
   try {
     // baseURL, endpoint, query, queryParameters
-    const url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&lat=${request.query.lat}&lon=${request.query.lon}`;
+    const url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&lat=${request.query.lat}&lon=${request.query.lon}&days=7`;
     const weatherResponse = await axios.get(url);
     console.log(weatherResponse.data);
     const weatherArray = weatherResponse.data.data.map(weather => new Forecast(weather));
@@ -47,7 +47,7 @@ class Forecast {
 app.get('/movies', async (request, response, next) => {
   try {
     // baseURL, endpoint, query, queryParameters
-    const url = `https://api.themoviedb.org/3/search/keyword?api_key${process.env.MOVIE_API_KEY}&query${request.query.searchQuery}`;
+    const url = `https://api.themoviedb.org/3/search/movie?api_key${process.env.MOVIE_API_KEY}&query${request.query.searchQuery}`;
     const movieResponse = await axios.get(url);
     console.log(movieResponse.data);
     const movieArray = movieResponse.data.results.map(title => new Movie(title));
@@ -60,7 +60,13 @@ app.get('/movies', async (request, response, next) => {
 
 class Movie {
   constructor(title) {
-    this.name = title.results.name;
+    this.name = title.original_title;
+    this.overview = title.overview,
+    this.average_votes = title.vote_average,
+    this.vote_count = title.vote_count,
+    this.image_url = `base url${title.poster_path}`,
+    this.popularity = title.popularity,
+    this.released_on = title.release_date;
   }
 }
 
