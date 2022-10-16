@@ -5,6 +5,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config(); // configure dotenv to work for this app 
 const axios = require('axios');
+const getWeather = require('./modules/weather');
 
 // const weatherData = require('./data/weather.json'); // dummy data 
 
@@ -23,26 +24,28 @@ app.get('/', (request, response) => {
   response.send('testing... testing');
 });
 
-app.get('/weather', async (request, response, next) => {
-  try {
-    // baseURL, endpoint, query, queryParameters
-    const url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&lat=${request.query.lat}&lon=${request.query.lon}&days=7`;
-    const weatherResponse = await axios.get(url);
-    console.log(weatherResponse.data);
-    const weatherArray = weatherResponse.data.data.map(weather => new Forecast(weather));
-    response.status(200).send(weatherArray);
-  } catch(error) {
-    console.error(error);
-    next(error);
-  }
-});
+app.get('/', getWeather);
 
-class Forecast {
-  constructor(weather) {
-    this.date = weather.datetime,
-    this.description = weather.weather.description;
-  }
-}
+// app.get('/weather', async (request, response, next) => {
+//   try {
+//     // baseURL, endpoint, query, queryParameters
+//     const url = `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHER_API_KEY}&lat=${request.query.lat}&lon=${request.query.lon}&days=7`;
+//     const weatherResponse = await axios.get(url);
+//     console.log(weatherResponse.data);
+//     const weatherArray = weatherResponse.data.data.map(weather => new Forecast(weather));
+//     response.status(200).send(weatherArray);
+//   } catch(error) {
+//     console.error(error);
+//     next(error);
+//   }
+// });
+
+// class Forecast {
+//   constructor(weather) {
+//     this.date = weather.datetime,
+//     this.description = weather.weather.description;
+//   }
+// }
 
 app.get('/movies', async (request, response, next) => {
   try {
