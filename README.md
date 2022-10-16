@@ -44,6 +44,16 @@ Name of feature: Adding weather and movies API to our app - Lab 8
 
 Estimate of time needed to complete: 2 hours
 
-1st attemp time: 7:30pm - 9:15pm
+1st attemp time: 7:30pm - 9:15pm, continued
 
-Actual time needed to complete: Still working on it!
+Actual time needed to complete: 3 hrs 
+
+---
+
+Name of feature: Refactoring our code - Lab 9
+
+Estimate of time needed to complete: 2 hours
+
+1st attemp time: 3:00pm-4:30pm
+
+Actual time needed to complete: Still working on making it look nice :)
