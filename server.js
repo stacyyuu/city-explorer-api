@@ -4,7 +4,7 @@
 const express = require('express');
 const cors = require('cors');
 // configure dotenv to work for this app 
-require('dotenv').config(); 
+require('dotenv').config();
 const getWeather = require('./modules/weather');
 const getMovies = require('./modules/movies');
 
@@ -24,10 +24,31 @@ app.get('/', (request, response) => {
 });
 
 // recieves weather information from weather module
-app.get('/weather', getWeather);
+// app.get('/weather', getWeather);
+app.get('/weather', weatherHandler);
+
+function weatherHandler(request, response) {
+  const { lat, lon } = request.query;
+  getWeather(lat, lon)
+    .then(summaries => response.send(summaries))
+    .catch((error) => {
+      console.error(error);
+      response.status(500).send(error.message);
+    });
+}
 
 // recieves movie information from movie module
-app.get('/movies', getMovies);
+app.get('/movies', movieHandler);
+
+function movieHandler(request, response) {
+  const { searchQuery } = request.query;
+  getMovies(searchQuery)
+    .then(movies => response.send(movies))
+    .catch((error) => {
+      console.error(error);
+      response.status(500).send(error.message);
+    });
+}
 
 
 // error handling middleware MUST be the last app.use() defined in the server file
