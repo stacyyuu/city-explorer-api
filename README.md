@@ -25,6 +25,7 @@
 ## WRRC
 
 <img src="WRRC2.png">
+<img src="WRRC3.png">
 
 ---
 
@@ -57,3 +58,13 @@ Estimate of time needed to complete: 2 hours
 1st attemp time: 3:00pm-4:30pm
 
 Actual time needed to complete: Still working on making it look nice :)
+
+---
+
+Name of feature: Working with cache - Lab 10
+
+Estimate of time needed to complete: 1 hour
+
+1st attemp time: 7:00pm-8:30pm
+
+Actual time needed to complete: 1 hr and 30 mins
